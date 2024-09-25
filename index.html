@@ -595,6 +595,8 @@
         }
       }
 
+
+      
       // Submit the form directly if Section 3 is not required
       finalizeSubmission(formData);
     }
@@ -602,6 +604,9 @@
     function finalizeSubmission(formData) {
       // Check if Section 3 was displayed and collect answers from Section 3
       if (document.getElementById('section3').style.display === 'block') {
+        formData.question6 = document.querySelector('input[name="question6"]:checked').value;
+        formData.question7 = document.querySelector('input[name="question7"]:checked').value;
+
         // Add Section 3 score to totalScore
         formData.section3Score = calculateSection3Score();
         formData.totalScore += formData.section3Score;  // Add Section 3 score to the overall total
