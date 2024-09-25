@@ -605,6 +605,15 @@
     }
 
     function finalizeSubmission(formData) {
+      if (document.getElementById('section2').style.display === 'block') {
+        // Collect answers from Section 2
+        formData.question1 = document.querySelector('input[name="question1"]:checked').value;
+        formData.question2 = document.querySelector('input[name="question2"]:checked').value;
+        formData.question3 = document.querySelector('input[name="question3"]:checked').value;
+        formData.question4 = document.querySelector('input[name="question4"]:checked').value;
+        formData.question5 = document.querySelector('input[name="question5"]:checked').value;
+        
+
       // Check if Section 3 was displayed and collect answers from Section 3
       if (document.getElementById('section3').style.display === 'block') {
         formData.question6 = document.querySelector('input[name="question6"]:checked').value;
