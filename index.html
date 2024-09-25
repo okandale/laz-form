@@ -605,8 +605,8 @@
     }
 
     function finalizeSubmission(formData) {
-      if (document.getElementById('section2').style.display === 'block') {
-        // Collect answers from Section 2
+      if (document.getElementById('section2').style.display === 'block' || document.getElementById('section3').style.display === 'block') {
+        // **Section 2 answers are collected regardless of Section 3**
         formData.question1 = document.querySelector('input[name="question1"]:checked').value;
         formData.question2 = document.querySelector('input[name="question2"]:checked').value;
         formData.question3 = document.querySelector('input[name="question3"]:checked').value;
