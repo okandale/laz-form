@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <!-- Viewport Meta Tag -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Optional Bootstrap JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <!-- Custom Styles -->
+  <style>
+    /* Default font sizes and full-width layout for mobile devices */
+  /* General styling for desktop and larger screens */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f3fe;
+    color: #333333;
+    font-size: 1rem; /* Smaller base size for larger screens */
+    max-width: 1200px; /* Limit the width of the form on larger screens */
+    margin: 0 auto; /* Center the form on larger screens */
+  }
+
+  h2 {
+    font-size: 1.5rem; /* Smaller heading size for desktop */
+    color: #2c3e50;
+  }
+  .required::after {
+    content: '*';
+    color: red;
+  }
+  /* Button styling */
+  .btn {
+    font-size: 1rem; /* Smaller button text */
+    padding: 0.75rem 1.5rem; /* More compact padding for buttons */
+    width: auto; /* Buttons should not take up too much space on larger screens */
+    display: inline-block; /* Allow buttons to auto-fit their content */
+    text-align: center;
+  }
+
+  /* Form group spacing */
+  .form-group {
+    margin-bottom: 1rem; /* Reduce space between form elements */
+  }
+
+  /* General form control for inputs and selects */
+  .form-control {
+    font-size: 1rem; /* Smaller input font size */
+    padding: 0.5rem; /* Smaller padding inside input fields */
+    height: auto; /* Keep adaptive height */
+    width: 100%; /* Ensure inputs take full width */
+  }
+
+  /* Targeting the select dropdowns */
+  select.form-control {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    height: auto;
+  }
+
+  /* General styling for radio buttons */
+  /* General styling for radio buttons */
+.form-check {
+  margin-bottom: 1rem;          /* Space between answers */
+  display: flex;
+  align-items: center;          /* Align radio buttons and labels */
+}
+  .form-group p {
+  margin-top: 2rem;          /* Space between questions */
+  }
+/* Radio button styling */
+.form-check-input {
+  margin-right: 0.5rem;         /* Space between the radio button and label */
+  width: 1rem;                  /* Smaller size, reduced from 1.25rem */
+  height: 1rem;                 /* Smaller size, reduced from 1.25rem */
+}
+
+/* Label styling */
+.form-check-label {
+  font-size: 1rem;              /* Consistent with other form elements */
+  line-height: 1.5;             /* Ensure label aligns with button */
+  padding-left: 0.25rem;        /* Slightly reduced padding to match smaller radio button */
+}
+
+/* Add space between radio buttons */
+.form-check + .form-check {
+  margin-top: 0.5rem;           /* Add space between radio buttons */
+}
+  /* Increase size further for smaller screens */
+  /* MEDIA QUERY: Adjustments for tablets */
+
+.form-section {
+  display: none;
+}
+@media (max-width: 1024px) {
+  body {
+    font-size: 1.8rem; /* Slightly increase font size */
+    max-width: 100%; /* Allow full-width form on tablets */
+  }
+
+  h2 {
+    font-size: 2.6rem; /* Larger heading */
+  }
+
+  h3 {
+    font-size: 2.6rem; /* Larger heading */
+  }
+
+  .btn {
+    font-size: 1.8rem;
+    padding: 1rem 2rem;
+    width: 100%; /* Full width buttons for better visibility */
+  }
+
+  .form-control {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+
+  select.form-control {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+
+  .form-check-input {
+    width: 25px;
+    height: 25px;
+    margin-right: 0.5rem;        /* Consistent spacing for tablets */
+  }
+
+  .form-check-label {
+    font-size: 2rem;         /* Increase font size for better readability on tablets */
+    padding: 1rem;
+  }
+
+
+  .form-group p {
+  font-size: 2rem; /* Adjust font size for the questions */
+  }
+}
+
+/* MEDIA QUERY: Further adjustments for mobile screens */
+@media (max-width: 768px) {
+  body {
+    font-size: 1.8rem; /* Increase font size for mobile */
+    padding: 10px; /* Add padding around the form */
+  }
+
+  h2 {
+    font-size: 2.6rem; /* Larger heading */
+  }
+
+  h3 {
+    font-size: 2.6rem; /* Larger heading */
+  }
+  .btn {
+    font-size: 1.8rem; /* Increase button text size */
+    padding: 1.25rem 2.5rem; /* Larger padding */
+    width: 100%; /* Full width buttons */
+  }
+
+  .form-control {
+    font-size: 1.8rem; /* Larger input font size */
+    padding: 1.25rem; /* More padding for better spacing */
+  }
+
+  select.form-control {
+    font-size: 1.8rem;
+    padding: 1.25rem;
+  }
+
+  input[type="radio"] {
+    transform: scale(1.6); /* Larger radio buttons */
+  }
+
+  .form-check-input {
+    width: 22px;
+    height: 22px;
+    margin-right: 2rem;        /* Consistent spacing for mobile */
+  }
+
+  .form-check-label {
+    font-size: 1.6rem;         /* Larger font size for mobile readability */
+    padding: 1rem;
+  }
+}
+
+/* MEDIA QUERY: Adjustments for small phones */
+@media (max-width: 576px) {
+  body {
+    font-size: 1.9rem; /* Further increase font size for small screens */
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 3rem;
+  }
+
+  .btn {
+    font-size: 1.9rem;
+    padding: 1.5rem 3rem;
+    width: 100%;
+  }
+
+  .form-control {
+    font-size: 1.9rem;
+    padding: 1.5rem;
+  }
+
+  select.form-control {
+    font-size: 1.9rem;
+    padding: 1.5rem;
+  }
+
+  input[type="radio"] {
+    transform: scale(1.8); /* Larger radio buttons for small screens */
+  }
+
+  .form-check-input {
+    width: 24px;
+    height: 24px;
+    margin-right: 2rem;        /* Maintain space on small screens */
+  }
+
+  .form-check-label {
+    font-size: 1.8rem;         /* Larger font size for smaller screens */
+    padding: 1rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-12 text-center">
+        <img src="https://i.imgur.com/fcs1GtV.png" alt="Laz Enstitüsü Logo" class="img-fluid mb-4" style="max-width: 200px;">
+      </div>
+    </div>
+    <h2 class="text-center mb-4">2024-2025 Yılı 1. Dönem Online Lazca Atölye Başvuru Formu</h2>
+    <p>Laz Enstitüsü'nün düzenlediği online Lazca atölyesine başvurmak için aşağıdaki formu doldurunuz.</p>
+    <p>Kurs sonunda kursiyerler katılım belgesi alacaklar.
+      Kursa %70 oranında devamlılık sağlayamayan kursiyerler katılım belgesi almaya hak kazanamayacaklardır.
+      Bu form, sınıf veya seviyeler ile ilgili herhangi bir sorunuz varsa, lütfen info@lazenstitu.com adresinden bizimle iletişime geçin.</p>
+
+    <p>Please fill out the following form to apply for the online Laz language workshop organized by the Laz Institute.
+      At the end of the course, participants will receive a certificate of attendance.
+      Participants who cannot achieve a 70% attendance rate for the course will not be eligible to receive a certificate of attendance.
+      Please contact info@lazenstitu.com if you have any questions.</p>
+    <hr>
+    <form id="mainForm">
+      <!-- Section 1: General Information -->
+      <div id="section1" class="form-section">
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="name" class="required"><i class="fas fa-user"></i> İsim-Soyisim / Name-Surname:</label>
+              <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+          </div>
+
+      <div class="col-12">
+        <div class="form-group">
+          <label for="gender" class="required"><i class="fas fa-venus-mars"></i> Cinsiyetiniz/Gender:</label>
+          <input type="text" id="gender" name="gender" class="form-control" required>
+        </div>
+      </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="email" class="required"><i class="fas fa-envelope"></i> Email Address:</label>
+              <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="age" class="required"><i class="fas fa-calendar-alt"></i> Yaş / Age:</label>
+              <select id="age" name="age" class="form-control" required>
+                <option value="">Seçiniz / Select</option>
+                <option value="10-15">10-15</option>
+                <option value="16-25">16-25</option>
+                <option value="26-50">26-50</option>
+                <option value="50+">50+</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="phone" class="required"><i class="fas fa-phone"></i> Telefon Numarası / Phone Number:</label>
+              <input type="tel" id="phone" name="phone" class="form-control" required pattern="[0-9]{10,15}" title="Please enter a valid phone number">
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="occupation" class="required"><i class="fas fa-briefcase"></i> Meslek / Occupation:</label>
+              <input type="text" id="occupation" name="occupation" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="birthPlace" class="required"><i class="fas fa-map-marker-alt"></i> Doğum Yeri / Place of Birth:</label>
+              <input type="text" id="birthPlace" name="birthPlace" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="familyOrigin" class="required"><i class="fas fa-globe"></i> Aileniz Nereli / Where is your family from?</label>
+              <input type="text" id="familyOrigin" name="familyOrigin" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="preferredSchedule" class="required"><i class="fas fa-clock"></i> Preferred Schedule:</label>
+              <select id="preferredSchedule" name="preferredSchedule" class="form-control" required>
+                <option value="">Seçiniz / Select</option>
+                <option value="Haftaiçi / Weekdays">Haftaiçi / Weekdays</option>
+                <option value="Haftasonu / Weekends">Haftasonu / Weekends</option>
+                <option value="Farketmez / Doesn't matter">Farketmez / Doesn't matter</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="courseLevel" class="required"><i class="fas fa-graduation-cap"></i> Atölye Seviyesi (<a href="https://docs.google.com/document/d/14wgl0mV_9_4nEAt1c6Or3-QduxTDYHdf-WcZvE76bYA/edit?usp=sharing" target="_blank">Detaylar/Details</a>):</label>
+              <select id="courseLevel" name="courseLevel" class="form-control" required>
+                <option value="">Seçiniz / Select</option>
+                <option value="Başlangıç Seviyesi">Başlangıç Seviyesi/Beginner</option>
+                <option value="Üst Başlangıç Seviye">Üst Başlangıç Seviyesi/Upper Beginner</option>
+                <option value="Orta Seviye">Orta Seviyesi/Intermediate</option>
+                <option value="İleri Seviye">İleri Seviyesi/Advanced</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="form-group">
+              <label for="consent" class="required"><i class="fas fa-video"></i> Onay/Consent:</label>
+              <p>
+                6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında eğitim aldığınız süre içinde Laz Enstitüsü tarafından yapılan etkinliklerde kaydedilen ve yapılan faaliyetlerin tanınırlık ve görünürlük düzeyinin arttırılması amacıyla sınırlı olarak, yer aldığınız tüm etkinlik ve programlarda kaydedilen görsel ve işitsel kayıtlarınızın Laz Enstitüsü'ne ait tüm sosyal medya mecralarında eğitim süresiyle sınırlı olmaksızın yayınlanmasına izin veriyor musunuz?
+              </p>
+              <p>
+                In accordance with Law No. 6698 on the Protection of Personal Data, do you consent to the Laz Institute recording your visual and audio materials during the events and programs you participate in and publishing them on all social media platforms owned by the Laz Institute, both during and after the course, to enhance the visibility and recognition of the activities conducted?
+              </p>
+              <select id="consent" name="consent" class="form-control" required>
+                <option value="">Seçiniz / Select</option>
+                <option value="Onay veriyorum / I agree">Onay veriyorum / I agree</option>
+              </select>
+            </div>
+          </div>
+
+
+        <button type="button" class="btn btn-primary" onclick="nextSection()">Next</button>
+      </div>
+      <!-- Section 2: Initial Placement Test -->
+      <div id="section2" class="form-section">
+        <h3>Initial Placement Test</h3>
+
+        <!-- Question 1 -->
+        <div class="form-group" id="q1">
+          <p><strong>1. Baba-skani nak̆o/muk̆u _______ ren/on?</strong></p>
+          <div class="form-check">
+            <input type="radio" name="question1" value="q1a1" class="form-check-input" required>
+            <label class="form-check-label">içalişu</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question1" value="q1a2" class="form-check-input">
+            <label class="form-check-label">k̆oçi</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question1" value="q1a3c" class="form-check-input">
+            <label class="form-check-label">ʒ̆aneri</label>
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="form-group">
+          <p><strong>2. muşeni si andğa va _______________-i?</strong></p>
+          <div class="form-check">
+            <input type="radio" name="question2" value="q2a1" class="form-check-input" required>
+            <label class="form-check-label">gaçalişenan</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question2" value="q2a2" class="form-check-input">
+            <label class="form-check-label">içalişen</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question2" value="q2a3c" class="form-check-input">
+            <label class="form-check-label">içalişi</label>
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="form-group">
+          <p><strong>3. Si Ayşe ______</strong></p>
+          <div class="form-check">
+            <input type="radio" name="question3" value="q3a1c" class="form-check-input" required>
+            <label class="form-check-label">gegožin/cegozun/gcoxons</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question3" value="q3a2" class="form-check-input">
+            <label class="form-check-label">digurams</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question3" value="q3a3" class="form-check-input">
+            <label class="form-check-label">gaskiden</label>
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="form-group">
+          <p><strong>4. Ma handğa/andğa dersi _____.</strong></p>
+          <div class="form-check">
+            <input type="radio" name="question4" value="q4a1" class="form-check-input" required>
+            <label class="form-check-label">pşum</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question4" value="q4a2c" class="form-check-input">
+            <label class="form-check-label">miğun</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question4" value="q4a3" class="form-check-input">
+            <label class="form-check-label">meçams</label>
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="form-group">
+          <p><strong>5. Befas/Befak kitabi ______ unon/gorums.</strong></p>
+          <div class="form-check">
+            <input type="radio" name="question5" value="q5a1c" class="form-check-input" required>
+            <label class="form-check-label">ok̆itxu</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question5" value="q5a2" class="form-check-input">
+            <label class="form-check-label">doʒ̆onu</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" name="question5" value="q5a3" class="form-check-input">
+            <label class="form-check-label">ik̆itxams</label>
+          </div>
+        </div>
+
+        <!-- Add more questions as needed -->
+
+        <button type="button" class="btn btn-success" onclick="submitForm()">Submit</button>
+      </div>
+
+      <!-- Submission Confirmation -->
+      <div id="submissionMessage" class="form-section text-center">
+        <h2>Başvurunuz için teşekkür ederiz/Thank you for your submission!</h2>
+        <p>Başvurunuz alınmıştır.
+          Başka sorularınız olursa, lütfen bize info@lazenstitu.com adresinden e-posta gönderin.
+
+          Your application has been received.
+        If you have any further questions, please email us at info@lazenstitu.com.
+        </p>
+      </div>
+    </form>
+
+    <!-- Section 3: Additional Test (Visible if score > 30) -->
+    <div id="section3" class="form-section">
+      <h3>Advanced Placement Test</h3>
+
+      <!-- Instructional Text -->
+      <p>Tudeni paragrafi ik̆itxit do k̆itxalapes cevabi meçit:</p>
+      <p>
+        <strong>Arte:</strong> Vuuu baba, ham (haya, iya) žirem-i! Hak̆o didi (morderi) mtuti!<br>
+        <strong>Baba:</strong> Moro mu! Mtuti didi iyen (iven, iqven).<br>
+        <strong>Arte:</strong> Maşkurinu, baba.<br>
+        <strong>Baba:</strong> Mot gaşkurinas, mutu var goğodasen. K̆afesis molaxes.<br>
+        <strong>Arte:</strong> Mtutepe so skidunan?<br>
+        <strong>Baba:</strong> Mtutepe germas skidunan. Germape mtutepeşi natureli habitat̆i ren.<br>
+        <strong>Arte:</strong> Mu imxoran, muç̌ote şuri şinaxuman?<br>
+        <strong>Baba:</strong> Mtutepek iri-tevuli imxoran; but̆k̆a (pavri), topuri, xorʒ̆i.<br>
+        <strong>Arte:</strong> Mtutepes cinsi uğunan-i?<br>
+        <strong>Baba:</strong> Ho, moro! Çkva do çkva cinsi mtutepe skidun dixaşi jin. Hakoni mtuti bresti mtuti ren. Kutubepes kçe do didi mtutepe skidunan. Hentepek çxomi do çkva mutxanepe imxoran.<br>
+        <strong>Arte:</strong> Baba, mtutis mupe axenen?<br>
+        <strong>Baba:</strong> Mtutis mu axenen! Ncaşe eyalen. Topuri aç̌k̆omen. Çxomi aç̌open. K̆ai ak̆ap̌inen. Ar ğormaşi doloxe aşi tuta anciren.<br>
+        <strong>Arte:</strong> Baba, ma mtutepe dido maoropen (p̌orom, p̌qorop).<br>
+        <strong>Baba:</strong> Nandidi-çkimik “Mk̆yapu do Mtutişi P̆aramiti” mimeselu dort̆u.
+      </p>
+    <!-- Question 6 (Section 3) -->
+    <div class="form-group">
+      <p><strong>6. Artes muşeni aşkurinu?</strong></p>
+      <div class="form-check">
+        <input type="radio" name="question6" value="q6a1" class="form-check-input" required>
+        <label class="form-check-label">Mtutik ar mutxani na žiru şeni.</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="question6" value="q6a2" class="form-check-input">
+        <label class="form-check-label">Mtutik ocağis na nok̆ap̌u şeni.</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="question6" value="q6a3c" class="form-check-input">
+        <label class="form-check-label">Mtuti na žiru şeni.</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <p><strong>7. Mtuti mzuğas skidun-i?</strong></p>
+      <div class="form-check">
+        <input type="radio" name="question7" value="q7a1" class="form-check-input" required>
+        <label class="form-check-label">Mtutik çxomi na imxors şeni mzuğas askudinen</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="question7" value="q7a2" class="form-check-input">
+        <label class="form-check-label">Mtutik xorʒ̆i oç̌k̆omu na k̆ai daʒ̆onen şeni germas va skidun</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="question7" value="q7a3c" class="form-check-input">
+        <label class="form-check-label">Mtutik abjas na skidun çxomi na imxors şeni germas doskidun</label>
+      </div>
+    </div>
+
+    <!-- Add more questions as needed -->
+    <footer id="footer" style="margin-top: 20px;">
+      <hr>
+      <p style="margin-bottom: 10px;"><span style="color: red;">*</span> ile işaretlenmiş alanlar zorunludur / Fields marked with <span style="color: red;">*</span> are required.</p>
+    </footer>
+    <button type="button" class="btn btn-success" onclick="submitForm()">Submit</button>
+  </div>
+
+  <script>
+    var totalScore = 0; // Initialize totalScore
+
+    // Show the first section on page load
+    document.getElementById('section1').style.display = 'block';
+
+    function nextSection() {
+      // Get the selected course level
+      var courseLevel = document.getElementById('courseLevel').value;
+
+      // Form validation
+      if (!validateSection1()) {
+        alert('Please fill out all required fields.');
+        return;
+      }
+
+      if (courseLevel === 'Başlangıç Seviyesi') {
+        // Skip Section 2 and Section 3, directly submit the form
+        submitForm();
+      } else {
+        // Proceed to Section 2 (Initial Placement Test)
+        showSection('section2');
+      }
+    }
+
+    function validateSection1() {
+      // Validate required fields in Section 1
+      var requiredFields = ['name', 'email', 'age', 'phone', 'occupation', 'birthPlace', 'familyOrigin', 'preferredSchedule', 'courseLevel', 'consent'];
+      for (var i = 0; i < requiredFields.length; i++) {
+        var field = document.getElementById(requiredFields[i]);
+        if (!field.value) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    function showSection(sectionId) {
+      // Hide all sections
+      var sections = document.getElementsByClassName('form-section');
+      for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = 'none';
+      }
+      // Show the selected section
+      document.getElementById(sectionId).style.display = 'block';
+      if (sectionId === 'section2') {
+        var firstQuestion = document.getElementById('section2');
+        if (firstQuestion) {
+          firstQuestion.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else if (sectionId === 'section3') {
+        var advancedSection = document.getElementById('section3');
+        if (advancedSection) {
+          advancedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        // Scroll to the top of the page
+        window.scrollTo(0, 0);
+      }
+    }
+
+    function submitForm() {
+      // Collect form data from Section 1
+      var formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        age: document.getElementById('age').value,
+        phone: document.getElementById('phone').value,
+        occupation: document.getElementById('occupation').value,
+        birthPlace: document.getElementById('birthPlace').value,
+        familyOrigin: document.getElementById('familyOrigin').value,
+        preferredSchedule: document.getElementById('preferredSchedule').value,
+        courseLevel: document.getElementById('courseLevel').value,
+        consent: document.getElementById('consent').value,
+        totalScore: totalScore // Will be updated if Section 2 is completed
+      };
+
+      // Check if Section 2 was completed
+      if (document.getElementById('section2').style.display === 'block') {
+        // Collect answers from Section 2
+        formData.question1 = document.querySelector('input[name="question1"]:checked').value;
+        formData.question2 = document.querySelector('input[name="question2"]:checked').value;
+        formData.question3 = document.querySelector('input[name="question3"]:checked').value;
+        formData.question4 = document.querySelector('input[name="question4"]:checked').value;
+        formData.question5 = document.querySelector('input[name="question5"]:checked').value;
+        
+        // Calculate totalScore based on answers
+        formData.totalScore = calculateSection2Score();
+
+        // Check if the score is above 40 and show Section 3
+        if (formData.totalScore > 30) {
+          showSection('section3');
+          return;
+        }
+      }
+
+      // Submit the form directly if Section 3 is not required
+      finalizeSubmission(formData);
+    }
+
+    function finalizeSubmission(formData) {
+      // Check if Section 3 was displayed and collect answers from Section 3
+      if (document.getElementById('section3').style.display === 'block') {
+        // Add Section 3 score to totalScore
+        formData.section3Score = calculateSection3Score();
+        formData.totalScore += formData.section3Score;  // Add Section 3 score to the overall total
+      }
+
+      // Call server-side function to process the form
+      google.script.run.withSuccessHandler(onSuccess).processForm(formData);
+
+      // Hide all <p> elements under the <h2>
+      var paragraphs = document.querySelectorAll('h2 + p, h2 + p + p, h2 + p + p + p');
+      paragraphs.forEach(function(p) {
+        p.style.display = 'none';
+      });
+
+      // Hide the footer
+      var footer = document.querySelector('footer');
+      if (footer) {
+        footer.style.display = 'none';
+      }
+      // Show submission message
+      showSection('submissionMessage');
+    }
+
+    function calculateSection2Score() {
+      var score = 0;
+
+      // Question 1
+      var q1Answer = document.querySelector('input[name="question1"]:checked');
+      if (q1Answer && q1Answer.value === 'q1a3c') {
+        score += 10;
+      }
+
+      // Question 2
+      var q2Answer = document.querySelector('input[name="question2"]:checked');
+      if (q2Answer && q2Answer.value === 'q2a3c') {
+        score += 10;
+      }
+
+      // Question 3
+      var q3Answer = document.querySelector('input[name="question3"]:checked');
+      if (q3Answer && q3Answer.value === 'q3a1c') {
+        score += 10;
+      }
+
+      // Question 4
+      var q4Answer = document.querySelector('input[name="question4"]:checked');
+      if (q4Answer && q4Answer.value === 'q4a2c') {
+        score += 10;
+      }
+
+      // Question 5
+      var q5Answer = document.querySelector('input[name="question5"]:checked');
+      if (q5Answer && q5Answer.value === 'q5a1c') {
+        score += 10;
+      }
+
+      return score;
+    }
+
+    function calculateSection3Score() {
+      var score = calculateSection2Score();
+
+      // Question 6
+      var q6Answer = document.querySelector('input[name="question6"]:checked');
+      if (q6Answer && q6Answer.value === 'q6a3c') {
+        score += 10;
+      }
+
+      // Question 7
+      var q7Answer = document.querySelector('input[name="question7"]:checked');
+      if (q7Answer && q7Answer.value === 'q7a3c') {
+        score += 10;
+      }
+
+      return score;
+    }
+
+    function onSuccess(status) {
+      if (status !== 'Success') {
+        alert('An error occurred: ' + status);
+      }
+    }
+  </script>
+</body>
+</html>
