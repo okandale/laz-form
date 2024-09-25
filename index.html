@@ -644,25 +644,19 @@
         // Send the form data to the Google Apps Script Web App using fetch
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec'; // Your Google Apps Script Web App URL
 
-        fetch(scriptURL, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.text())
-        .then((response) => {
-            if (response === 'Success') {
-            showSection('submissionMessage');
+        // Create a callback function to handle the response
+        window.jsonpCallback = function(response) {
+            if (response.result === 'success') {
+            showSection('submissionMessage');  // Show a success message
             } else {
-            alert('An error occurred: ' + response);
+            alert('An error occurred: ' + response.error);
             }
-        })
-        .catch(error => {
-            console.error('Error!', error.message);
-            alert('Submission failed. Please try again later.');
-        });
+        };
+
+        // Dynamically add a script tag to the DOM to send the JSONP request
+        const script = document.createElement('script');
+        script.src = `${scriptURL}?callback=jsonpCallback&data=${encodeURIComponent(JSON.stringify(formData))}`;
+        document.body.appendChild(script);
         }
 
     function calculateSection2Score() {
