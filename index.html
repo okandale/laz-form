@@ -616,7 +616,7 @@
         consent: document.getElementById('consent').value,
         totalScore: totalScore // Will be updated if Section 2 is completed
       };
-
+      hideloading();
       // Check if Section 2 was completed
       if (document.getElementById('section2').style.display === 'block') {
         // Collect answers from Section 2
@@ -634,7 +634,7 @@
           showSection('section3');
           return;
         }
-      hideloading();
+      
       }
 
 
