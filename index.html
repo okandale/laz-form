@@ -275,6 +275,13 @@
             </div>
           </div>
 
+      <div class="col-12">
+        <div class="form-group">
+          <label for="gender" class="required"><i class="fas fa-venus-mars"></i> Cinsiyetiniz/Gender:</label>
+          <input type="text" id="gender" name="gender" class="form-control" required>
+        </div>
+      </div>
+
           <div class="col-12">
             <div class="form-group">
               <label for="age" class="required"><i class="fas fa-calendar-alt"></i> Yaş / Age:</label>
@@ -589,6 +596,7 @@
       var formData = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
+        gender: document.getElementById('gender').value,
         age: document.getElementById('age').value,
         phone: document.getElementById('phone').value,
         occupation: document.getElementById('occupation').value,
@@ -711,87 +719,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-code:
-function doGet(e) {
-    return HtmlService.createHtmlOutputFromFile('Index');
-  }
-  
-  function processForm(formData) {
-    try {
-      Logger.log('Form Data Received: ' + JSON.stringify(formData));
-      
-      // Open the Google Sheet by ID
-      var sheet = SpreadsheetApp.openById('10Ja7ZndLobX5QADOPU8Q4yW_-CNeMoGwkPb3gzwNWMg').getSheetByName('Sayfa1'); // Replace 'Sheet1' with your actual sheet name if different
-  
-      if (!sheet) {
-        throw new Error('Sheet not found. Please check the sheet name.');
-      }
-  
-      // Determine the actual level based on totalScore
-      var actualLevel = determineLevel(formData.totalScore);
-  
-      // Append data to the sheet
-      sheet.appendRow([
-        new Date(),                // Column A: Timestamp
-        formData.name,             // Column B: Name
-        formData.email,            // Column C: Email
-        actualLevel,               // Column D: Actual Level
-        formData.preferredSchedule,// Column E: Preferred Schedule 
-        formData.totalScore,       // Column F: Total Score
-        formData.gender,
-        formData.age,              // Column G: Age
-        formData.phone,            // Column H: Phone
-        formData.occupation,       // Column I: Occupation
-        formData.birthPlace,       // Column J: Birth Place
-        formData.familyOrigin,     // Column K: Family Origin
-        formData.courseLevel,      // Column L: Course Level
-        formData.consent,          // Column M: Consent
-        formData.question1 || '',  // Column N: Question 1 Answer
-        formData.question2 || '',   // Column O: Question 2 Answer
-        formData.question3 || '',
-        formData.question4 || '',
-        formData.question5 || ''
-        // Add more fields if necessary
-      ]);
-      
-      return 'Success';
-    } catch (error) {
-      Logger.log('Error in processForm: ' + error);
-      return 'Error: ' + error.toString();
-    }
-  }
-  
-  // Function to determine the actual level based on totalScore
-  function determineLevel(totalScore) {
-    if (totalScore >= 0 && totalScore <= 10) {
-      return 'Başlangıç';
-    } else if (totalScore > 10 && totalScore <= 30) {
-      return 'Üst Başlangıç';
-    } else if (totalScore > 30 && totalScore <= 60) {
-      return 'Orta';
-    } else if (totalScore > 60 && totalScore <= 100) {
-      return 'İleri';
-    } else {
-      return 'Unknown';
-    }
-  }
-
-  
-
-  json:
-  {
-    "timeZone": "America/New_York",
-    "dependencies": {},
-    "exceptionLogging": "STACKDRIVER",
-    "runtimeVersion": "V8",
-    "webapp": {
-      "executeAs": "USER_DEPLOYING",
-      "access": "ANYONE_ANONYMOUS"
-    }
-  }
