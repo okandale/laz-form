@@ -548,7 +548,6 @@
     if (courseLevel === 'Başlangıç Seviyesi') {
         // Skip Section 2 and Section 3, directly submit the form
         submitForm();
-        showLoading();
     } else {
         // Proceed to Section 2 (Initial Placement Test)
         showSection('section2');
@@ -605,7 +604,6 @@
         console.log('Submit button clicked.');  // Debugging line
       // Collect form data from Section 1
 
-      showLoading();
 
       var formData = {
         name: document.getElementById('name').value,
