@@ -641,25 +641,29 @@
       }
 
       // Submit data to Google Apps Script Web App using Fetch API
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec';
+        // Send the form data to the Google Apps Script Web App using fetch
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec'; // Your Google Apps Script Web App URL
 
-      fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: {
-          'Content-Type': 'application/json'
+        fetch(scriptURL, {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+            'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.text())
+        .then((response) => {
+            if (response === 'Success') {
+            showSection('submissionMessage');
+            } else {
+            alert('An error occurred: ' + response);
+            }
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert('Submission failed. Please try again later.');
+        });
         }
-      })
-      .then(response => response.text())
-      .then((response) => {
-        if (response === 'Success') {
-          showSection('submissionMessage');  // Show a success message
-        } else {
-          alert('An error occurred: ' + response);
-        }
-      })
-      .catch(error => console.error('Error!', error.message));
-    }
 
     function calculateSection2Score() {
       var score = 0;
