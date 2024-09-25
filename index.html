@@ -602,6 +602,7 @@
       var formData = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
+        gender: document.getElementById('gender').value,
         age: document.getElementById('age').value,
         phone: document.getElementById('phone').value,
         occupation: document.getElementById('occupation').value,
@@ -625,7 +626,7 @@
         // Calculate totalScore based on answers
         formData.totalScore = calculateSection2Score();
 
-        // Check if the score is above 40 and show Section 3
+        // Check if the score is above 30 and show Section 3
         if (formData.totalScore > 30) {
           showSection('section3');
           return;
@@ -644,11 +645,28 @@
         formData.totalScore += formData.section3Score;  // Add Section 3 score to the overall total
       }
 
-      // Call server-side function to process the form
-      google.script.run.withSuccessHandler(onSuccess).processForm(formData);
+      // Send form data to Google Apps Script Web App
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec'; // Replace with your Web App URL
 
+      fetch(scriptURL, {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.text())
+      .then((response) => {
+        if (response === 'Success') {
+          showSection('submissionMessage');  // Show a success message
+        } else {
+          alert('An error occurred: ' + response);
+        }
+      })
+      .catch(error => console.error('Error!', error.message));
+      
       // Hide all <p> elements under the <h2>
-      var paragraphs = document.querySelectorAll('h2 + p, h2 + p + p, h2 + p + p + p');
+        var paragraphs = document.querySelectorAll('h2 + p, h2 + p + p, h2 + p + p + p');
       paragraphs.forEach(function(p) {
         p.style.display = 'none';
       });
@@ -721,6 +739,8 @@
         alert('An error occurred: ' + status);
       }
     }
-  </script>
+
+</script>
+
 </body>
 </html>
