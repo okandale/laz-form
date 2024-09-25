@@ -642,23 +642,25 @@
 
       // Submit data to Google Apps Script Web App using Fetch API
         // Send the form data to the Google Apps Script Web App using fetch
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec'; // Your Google Apps Script Web App URL
+        var script = document.createElement('script');
+        var callbackName = 'callback' + Date.now();  // Generate a unique callback name
 
-        // Create a callback function to handle the response
-        window.jsonpCallback = function(response) {
+        window[callbackName] = function(response) {
             if (response.result === 'success') {
-            showSection('submissionMessage');  // Show a success message
+                showSection('submissionMessage');
             } else {
-            alert('An error occurred: ' + response.error);
+                alert('An error occurred: ' + response.error);
             }
+
+            // Cleanup
+            delete window[callbackName];
+            document.body.removeChild(script);
         };
 
-        // Dynamically add a script tag to the DOM to send the JSONP request
-        const script = document.createElement('script');
-        script.src = `${scriptURL}?callback=jsonpCallback&data=${encodeURIComponent(JSON.stringify(formData))}`;
+        var queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(formData))}`;
+        script.src = `https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec?${queryString}`;
         document.body.appendChild(script);
-        }
-
+    }
     function calculateSection2Score() {
       var score = 0;
 
