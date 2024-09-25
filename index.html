@@ -487,31 +487,33 @@
     document.getElementById('section1').style.display = 'block';
 
     // Add the event listener for the "Next" button
-    document.getElementById('nextButton').addEventListener('click', function() {
+    document.getElementById('nextButton').addEventListener('click', function(event) {
+        event.preventDefault();
         nextSection();
     });
-    document.getElementById('nextButton').addEventListener('touchend', function() {
-        nextSection();
-    });    
 
+    document.getElementById('nextButton').addEventListener('touchend', function(event) {
+        event.preventDefault();
+        nextSection();
+    });
 
     function nextSection() {
-      // Get the selected course level
-      var courseLevel = document.getElementById('courseLevel').value;
+    // Get the selected course level
+    var courseLevel = document.getElementById('courseLevel').value;
 
-      // Form validation
-      if (!validateSection1()) {
+    // Form validation
+    if (!validateSection1()) {
         alert('Please fill out all required fields.');
         return;
-      }
+    }
 
-      if (courseLevel === 'Başlangıç Seviyesi') {
+    if (courseLevel === 'Başlangıç Seviyesi') {
         // Skip Section 2 and Section 3, directly submit the form
         submitForm();
-      } else {
+    } else {
         // Proceed to Section 2 (Initial Placement Test)
         showSection('section2');
-      }
+    }
     }
 
     function validateSection1() {
