@@ -309,7 +309,7 @@
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" onclick="nextSection()">Next</button>
+        <button type="button" class="btn btn-primary" id="nextButton">Next</button>
       </div>
       <!-- Section 2: Initial Placement Test -->
       <div id="section2" class="form-section">
@@ -485,6 +485,15 @@
 
     // Show the first section on page load
     document.getElementById('section1').style.display = 'block';
+
+    // Add the event listener for the "Next" button
+    document.getElementById('nextButton').addEventListener('click', function() {
+        nextSection();
+    });
+    document.getElementById('nextButton').addEventListener('touchend', function() {
+        nextSection();
+    });    
+
 
     function nextSection() {
       // Get the selected course level
