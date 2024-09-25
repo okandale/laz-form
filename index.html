@@ -610,7 +610,17 @@
         // Send the form data to the Google Apps Script Web App using fetch
         var script = document.createElement('script');
         var callbackName = 'callback' + Date.now();  // Generate a unique callback name
+      // Hide all <p> elements under the <h2>
+        var paragraphs = document.querySelectorAll('h2 + p, h2 + p + p, h2 + p + p + p');
+      paragraphs.forEach(function(p) {
+        p.style.display = 'none';
+      });
 
+      // Hide the footer
+      var footer = document.querySelector('footer');
+      if (footer) {
+        footer.style.display = 'none';
+      }
         window[callbackName] = function(response) {
             if (response.result === 'success') {
                 showSection('submissionMessage');
