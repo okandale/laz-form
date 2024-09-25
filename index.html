@@ -598,7 +598,7 @@
     function hideLoading() {
       setTimeout(function() {
         document.getElementById('loadingOverlay').style.display = 'none';
-      }, 2000); // 1 second delay for testing
+      }, 1000); // 1 second delay for testing
     }
 
     function submitForm() {
@@ -687,7 +687,6 @@
         footer.style.display = 'none';
       }
         window[callbackName] = function(response) {
-          hideLoading();
             if (response.result === 'success') {
                 showSection('submissionMessage');
             } else {
@@ -697,6 +696,7 @@
             // Cleanup
             delete window[callbackName];
             document.body.removeChild(script);
+            hideLoading();
         };
 
         var queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(formData))}`;
