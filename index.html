@@ -268,13 +268,6 @@
             </div>
           </div>
 
-      <div class="col-12">
-        <div class="form-group">
-          <label for="gender" class="required"><i class="fas fa-venus-mars"></i> Cinsiyetiniz/Gender:</label>
-          <input type="text" id="gender" name="gender" class="form-control" required>
-        </div>
-      </div>
-
           <div class="col-12">
             <div class="form-group">
               <label for="email" class="required"><i class="fas fa-envelope"></i> Email Address:</label>
@@ -350,20 +343,14 @@
 
           <div class="col-12">
             <div class="form-group">
-              <label for="consent" class="required"><i class="fas fa-video"></i> Onay/Consent:</label>
-              <p>
-                6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında eğitim aldığınız süre içinde Laz Enstitüsü tarafından yapılan etkinliklerde kaydedilen ve yapılan faaliyetlerin tanınırlık ve görünürlük düzeyinin arttırılması amacıyla sınırlı olarak, yer aldığınız tüm etkinlik ve programlarda kaydedilen görsel ve işitsel kayıtlarınızın Laz Enstitüsü'ne ait tüm sosyal medya mecralarında eğitim süresiyle sınırlı olmaksızın yayınlanmasına izin veriyor musunuz?
-              </p>
-              <p>
-                In accordance with Law No. 6698 on the Protection of Personal Data, do you consent to the Laz Institute recording your visual and audio materials during the events and programs you participate in and publishing them on all social media platforms owned by the Laz Institute, both during and after the course, to enhance the visibility and recognition of the activities conducted?
-              </p>
+              <label for="consent" class="required"><i class="fas fa-video"></i> Consent:</label>
               <select id="consent" name="consent" class="form-control" required>
                 <option value="">Seçiniz / Select</option>
                 <option value="Onay veriyorum / I agree">Onay veriyorum / I agree</option>
               </select>
             </div>
           </div>
-
+        </div>
 
         <button type="button" class="btn btn-primary" onclick="nextSection()">Next</button>
       </div>
@@ -602,7 +589,6 @@
       var formData = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
-        gender: document.getElementById('gender').value,
         age: document.getElementById('age').value,
         phone: document.getElementById('phone').value,
         occupation: document.getElementById('occupation').value,
@@ -626,7 +612,7 @@
         // Calculate totalScore based on answers
         formData.totalScore = calculateSection2Score();
 
-        // Check if the score is above 30 and show Section 3
+        // Check if the score is above 40 and show Section 3
         if (formData.totalScore > 30) {
           showSection('section3');
           return;
@@ -645,28 +631,11 @@
         formData.totalScore += formData.section3Score;  // Add Section 3 score to the overall total
       }
 
-      // Send form data to Google Apps Script Web App
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec'; // Replace with your Web App URL
+      // Call server-side function to process the form
+      google.script.run.withSuccessHandler(onSuccess).processForm(formData);
 
-      fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.text())
-      .then((response) => {
-        if (response === 'Success') {
-          showSection('submissionMessage');  // Show a success message
-        } else {
-          alert('An error occurred: ' + response);
-        }
-      })
-      .catch(error => console.error('Error!', error.message));
-      
       // Hide all <p> elements under the <h2>
-        var paragraphs = document.querySelectorAll('h2 + p, h2 + p + p, h2 + p + p + p');
+      var paragraphs = document.querySelectorAll('h2 + p, h2 + p + p, h2 + p + p + p');
       paragraphs.forEach(function(p) {
         p.style.display = 'none';
       });
@@ -739,8 +708,90 @@
         alert('An error occurred: ' + status);
       }
     }
-
-</script>
-
+  </script>
 </body>
 </html>
+
+
+
+
+
+
+code:
+function doGet(e) {
+    return HtmlService.createHtmlOutputFromFile('Index');
+  }
+  
+  function processForm(formData) {
+    try {
+      Logger.log('Form Data Received: ' + JSON.stringify(formData));
+      
+      // Open the Google Sheet by ID
+      var sheet = SpreadsheetApp.openById('10Ja7ZndLobX5QADOPU8Q4yW_-CNeMoGwkPb3gzwNWMg').getSheetByName('Sayfa1'); // Replace 'Sheet1' with your actual sheet name if different
+  
+      if (!sheet) {
+        throw new Error('Sheet not found. Please check the sheet name.');
+      }
+  
+      // Determine the actual level based on totalScore
+      var actualLevel = determineLevel(formData.totalScore);
+  
+      // Append data to the sheet
+      sheet.appendRow([
+        new Date(),                // Column A: Timestamp
+        formData.name,             // Column B: Name
+        formData.email,            // Column C: Email
+        actualLevel,               // Column D: Actual Level
+        formData.preferredSchedule,// Column E: Preferred Schedule 
+        formData.totalScore,       // Column F: Total Score
+        formData.gender,
+        formData.age,              // Column G: Age
+        formData.phone,            // Column H: Phone
+        formData.occupation,       // Column I: Occupation
+        formData.birthPlace,       // Column J: Birth Place
+        formData.familyOrigin,     // Column K: Family Origin
+        formData.courseLevel,      // Column L: Course Level
+        formData.consent,          // Column M: Consent
+        formData.question1 || '',  // Column N: Question 1 Answer
+        formData.question2 || '',   // Column O: Question 2 Answer
+        formData.question3 || '',
+        formData.question4 || '',
+        formData.question5 || ''
+        // Add more fields if necessary
+      ]);
+      
+      return 'Success';
+    } catch (error) {
+      Logger.log('Error in processForm: ' + error);
+      return 'Error: ' + error.toString();
+    }
+  }
+  
+  // Function to determine the actual level based on totalScore
+  function determineLevel(totalScore) {
+    if (totalScore >= 0 && totalScore <= 10) {
+      return 'Başlangıç';
+    } else if (totalScore > 10 && totalScore <= 30) {
+      return 'Üst Başlangıç';
+    } else if (totalScore > 30 && totalScore <= 60) {
+      return 'Orta';
+    } else if (totalScore > 60 && totalScore <= 100) {
+      return 'İleri';
+    } else {
+      return 'Unknown';
+    }
+  }
+
+  
+
+  json:
+  {
+    "timeZone": "America/New_York",
+    "dependencies": {},
+    "exceptionLogging": "STACKDRIVER",
+    "runtimeVersion": "V8",
+    "webapp": {
+      "executeAs": "USER_DEPLOYING",
+      "access": "ANYONE_ANONYMOUS"
+    }
+  }
