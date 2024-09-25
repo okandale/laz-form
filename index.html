@@ -534,12 +534,14 @@
     });
 
     function nextSection() {
+    showLoading();
     // Get the selected course level
     var courseLevel = document.getElementById('courseLevel').value;
 
     // Form validation
     if (!validateSection1()) {
         alert('Please fill out all required fields.');
+        hideLoading();
         return;
     }
 
@@ -549,6 +551,7 @@
     } else {
         // Proceed to Section 2 (Initial Placement Test)
         showSection('section2');
+        hideLoading();
     }
     }
 
@@ -597,6 +600,7 @@
     }
 
     function submitForm() {
+      showLoading();
         console.log('Submit button clicked.');  // Debugging line
       // Collect form data from Section 1
 
@@ -616,7 +620,6 @@
         consent: document.getElementById('consent').value,
         totalScore: totalScore // Will be updated if Section 2 is completed
       };
-      hideloading();
       // Check if Section 2 was completed
       if (document.getElementById('section2').style.display === 'block') {
         // Collect answers from Section 2
@@ -632,6 +635,7 @@
         // Check if the score is above 30 and show Section 3
         if (formData.totalScore > 30) {
           showSection('section3');
+          hideLoading();
           return;
         }
       
@@ -641,6 +645,7 @@
       
       // Submit the form directly if Section 3 is not required
       finalizeSubmission(formData);
+      hideLoading();
     }
 
     function finalizeSubmission(formData) {
@@ -673,7 +678,7 @@
         p.style.display = 'none';
       });
 
-      hideloading();
+      hideLoading();
 
       // Hide the footer
       var footer = document.querySelector('footer');
@@ -681,6 +686,7 @@
         footer.style.display = 'none';
       }
         window[callbackName] = function(response) {
+          hideLoading();
             if (response.result === 'success') {
                 showSection('submissionMessage');
             } else {
