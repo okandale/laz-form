@@ -31,6 +31,12 @@
     padding-top: 20%;
   }
 
+  .dialect-highlight {
+    background-color: #f9f871; /* light yellow highlight */
+    padding: 0 5px;
+    font-weight: bold;
+  }
+
   .spinner-border {
     width: 3rem;
     height: 3rem;
@@ -415,8 +421,19 @@
 
         <!-- Question 5 -->
         <div class="form-group">
-          <p><strong>5. Ardeşen ve Pazar ağızıları: Befa(k) kitabi ______ gorums.</strong></p>
-          <p><strong>Fındıklı, Arhavi ve Hopa ağızıları: Befak kitabi ______ unon.</strong></p>
+          <p><strong>5.</strong></p>
+          <div class="row">
+            <div class="col-sm-6">
+              <p><strong>Ardeşen ve Pazar ağızıları:</strong> 
+                <span class="dialect-highlight">Befa(k) kitabi</span> ______ gorums.
+              </p>
+            </div>
+            <div class="col-sm-6">
+              <p><strong>Fındıklı, Arhavi ve Hopa ağızıları:</strong> 
+                <span class="dialect-highlight">Befak kitabi</span> ______ unon.
+              </p>
+            </div>
+          </div>
           <div class="form-check">
             <input type="radio" name="question5" value="q5a1c" class="form-check-input" required>
             <label class="form-check-label">ok̆itxu</label>
