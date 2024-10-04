@@ -520,34 +520,50 @@
     <div class="form-group">
       <p><strong>7. Mtutepe mzuğas skidunan-i?</strong></p>
       <div class="form-check">
-        <input type="radio" name="question7" value="q7a1" class="form-check-input" required>
-        <label class="form-check-label">Mtutepek çxomi na ç̌k̆omups/imxors şeni mzuğas skidun</label>
+        <input type="radio" name="question7" value="q7a1c" class="form-check-input" required>
+        <label class="form-check-label">Mtutepek çxomi na ç̌k̆omups/imxors şeni mzuğas skidun.</label>
       </div>
       <div class="form-check">
-        <input type="radio" name="question7" value="q7a2" class="form-check-input">
-        <label class="form-check-label">Mtutepek xorʒ̆i oç̌k̆omu k̆ai na daʒ̆onen şeni germas va skidun</label>
+        <input type="radio" name="question7" value="q7a2c" class="form-check-input">
+        <label class="form-check-label">Mtutepek xorʒ̆i oç̌k̆omu k̆ai na daʒ̆onen şeni germas va skidun.</label>
       </div>
       <div class="form-check">
         <input type="radio" name="question7" value="q7a3c" class="form-check-input">
-        <label class="form-check-label">Mtutepek abjas na skidun çxomi na ç̌k̆omups/imxors şeni germas doskidun</label>
+        <label class="form-check-label">Mtutepek abjas na skidun çxomi na ç̌k̆omups/imxors şeni germas doskidun.</label>
       </div>
     </div>
 
     <div class="form-group">
       <p><strong>8. Mtutepes mu va axenenan?</strong></p>
       <div class="form-check">
-        <input type="radio" name="question8" value="q8a1" class="form-check-input" required>
-        <label class="form-check-label">Mtutepes xorʒ̆i aç̌k̆omen</label>
+        <input type="radio" name="question8" value="q8a1c" class="form-check-input" required>
+        <label class="form-check-label">Mtutepes xorʒ̆i aç̌k̆omen.</label>
       </div>
       <div class="form-check">
-        <input type="radio" name="question8" value="q8a2" class="form-check-input">
-        <label class="form-check-label">Mtutepes aputxenan/ajunenan</label>
+        <input type="radio" name="question8" value="q8a2c" class="form-check-input">
+        <label class="form-check-label">Mtutepes aputxenan/ajunenan.</label>
       </div>
       <div class="form-check">
         <input type="radio" name="question8" value="q8a3c" class="form-check-input">
-        <label class="form-check-label">Mtutepes ʒ̆k̆aris na skidunan skindinape aç̌openan/yaç̌openan</label>
+        <label class="form-check-label">Mtutepes ʒ̆k̆aris na skidunan skindinape aç̌openan/yaç̌openan.</label>
       </div>
     </div>
+
+    <div class="form-group"></div>
+      <p><strong>9. Kutubepes na skidunan mtutepe nam peri(rengi) renan?</strong></p>
+      <div class="form-check">
+        <input type="radio" name="question9" value="q9a1c" class="form-check-input" required>
+        <label class="form-check-label">Mtutepe kçe/xçe renan.</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="question9" value="q9a2c" class="form-check-input">
+        <label class="form-check-label">Mtutepe kçe/xçe do bresti renan.</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" name="question9" value="q9a3c" class="form-check-input">
+        <label class="form-check-label">Mtutepe bresti renan.</label>
+      </div>
+    </div>    
 
     <!-- Add more questions as needed -->
 
@@ -709,6 +725,7 @@
         formData.question6 = document.querySelector('input[name="question6"]:checked').value;
         formData.question7 = document.querySelector('input[name="question7"]:checked').value;
         formData.question8 = document.querySelector('input[name="question8"]:checked').value;
+        formData.question9 = document.querySelector('input[name="question9"]:checked').value;
         // Add Section 3 score to totalScore
         formData.section3Score = calculateSection3Score();
         formData.totalScore += formData.section3Score;  // Add Section 3 score to the overall total
@@ -805,6 +822,12 @@
         score += 10;
       }      
 
+      // Question 9
+      var q8Answer = document.querySelector('input[name="question7"]:checked');
+      if (q8Answer && q8Answer.value === 'q9a1c') {
+        score += 10;
+      }  
+      
       return score;
     }
 
