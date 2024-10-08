@@ -16,6 +16,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <!-- Custom Styles -->
   <style>
+  
+  /* Add this to your existing CSS */
+  #letterKnowledge {
+      width: auto;
+      min-width: 100px;
+      max-width: 200px;
+  }
+  
     /* Default font sizes and full-width layout for mobile devices */
   /* General styling for desktop and larger screens */
   #loadingOverlay {
@@ -603,35 +611,40 @@
   
   <script>
 
-  document.getElementById('letterKnowledge').addEventListener('change', function() {
-      var value = this.value;
-      
-      // Function to replace text in an element without affecting its children
-      function replaceTextInElement(element) {
-          for (let node of element.childNodes) {
-              if (node.nodeType === 3) { // Text node
-                  let text = node.nodeValue;
-                  if (value === 'no') {
-                      text = text.replace(/ʒ̆/g, 'tz').replace(/ʒ/g, 'ts');
-                  } else if (value === 'yes') {
-                      text = text.replace(/tz/g, 'ʒ̆').replace(/ts/g, 'ʒ');
-                  }
-                  node.nodeValue = text;
-              }
-              if (node.nodeType === 1) { // Element node
-                  replaceTextInElement(node);
-              }
-          }
-      }
+    document.getElementById('letterKnowledge').addEventListener('change', function() {
+        var value = this.value;
+        
+        // Function to replace text in an element without affecting its children
+        function replaceTextInElement(element) {
+            // Skip replacement if this is the question label
+            if (element.getAttribute('for') === 'letterKnowledge') {
+                return;
+            }
+            
+            for (let node of element.childNodes) {
+                if (node.nodeType === 3) { // Text node
+                    let text = node.nodeValue;
+                    if (value === 'no') {
+                        text = text.replace(/ʒ̆/g, 'tz').replace(/ʒ/g, 'ts');
+                    } else if (value === 'yes') {
+                        text = text.replace(/tz/g, 'ʒ̆').replace(/ts/g, 'ʒ');
+                    }
+                    node.nodeValue = text;
+                }
+                if (node.nodeType === 1) { // Element node
+                    replaceTextInElement(node);
+                }
+            }
+        }
 
-      // Get all form groups and question containers
-      var textElements = document.querySelectorAll('.form-group, .question-container, label, p');
-      
-      // Replace text in each element
-      textElements.forEach(function(element) {
-          replaceTextInElement(element);
-      });
-  });
+        // Get all form groups and question containers except the letter knowledge question
+        var textElements = document.querySelectorAll('.form-group:not(:has(#letterKnowledge)), .question-container, label:not([for="letterKnowledge"]), p:not(:has(label[for="letterKnowledge"]))');
+        
+        // Replace text in each element
+        textElements.forEach(function(element) {
+            replaceTextInElement(element);
+        });
+    });
 
 
     var totalScore = 0; // Initialize totalScore
