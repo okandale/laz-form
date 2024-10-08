@@ -821,16 +821,15 @@
         window[callbackName] = function(response) {
             if (response.result === 'success') {
                 showSection('submissionMessage');
-                hideLoading();  // Ensure the loading screen is hidden
             } else {
                 alert('An error occurred: ' + response.error);
-                hideLoading();  // Hide the loading screen even if there's an error
             }
 
             // Cleanup
             delete window[callbackName];
             document.body.removeChild(script);
         };
+
         var queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(formData))}`;
         script.src = `https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec?${queryString}`;
         document.body.appendChild(script);
