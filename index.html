@@ -360,7 +360,15 @@
         <h3>Belilerme Sınavı/Placement Test</h3>
         <p>Bu soru setinde sorular ağız farklılıkları gözetilerek hazırlanmıştır.</p>
         <p>These questions have been prepared with consideration for dialectal differences.</p>
-
+        
+        <div class="form-group">
+          <label for="letterKnowledge" class="required">Do you know the letters ʒ/ʒ̆?</label>
+          <select id="letterKnowledge" class="form-control" required>
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
         <!-- Question 1 -->
         <div class="form-group" id="q1">
           <p><strong>1. Baba-skani nak̆o/nak̆u/muk̆u _______ ren/on?</strong></p>
@@ -594,6 +602,28 @@
   </div>
   
   <script>
+
+    document.getElementById('letterKnowledge').addEventListener('change', function() {
+    var value = this.value;
+
+    // Get all the content where ʒ and ʒ̆ appear
+    var content = document.body.innerHTML;
+
+    if (value === 'no') {
+      // Replace ʒ with ts and ʒ̆ with tz
+      content = content.replace(/ʒ̆/g, 'tz'); // replace all instances of ʒ̆
+      content = content.replace(/ʒ/g, 'ts');  // replace all instances of ʒ
+    } else if (value === 'yes') {
+      // Restore original text by reversing the replacement if necessary
+      content = content.replace(/tz/g, 'ʒ̆'); // revert tz to ʒ̆
+      content = content.replace(/ts/g, 'ʒ');  // revert ts to ʒ
+    }
+    // Update the page content
+    document.body.innerHTML = content;
+    });
+    
+    // Update the page content
+    document.body.innerHTML = content;
     var totalScore = 0; // Initialize totalScore
 
     // Show the first section on page load
