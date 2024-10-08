@@ -603,27 +603,37 @@
   
   <script>
 
-    document.getElementById('letterKnowledge').addEventListener('change', function() {
-    var value = this.value;
+  document.getElementById('letterKnowledge').addEventListener('change', function() {
+      var value = this.value;
+      
+      // Function to replace text in an element without affecting its children
+      function replaceTextInElement(element) {
+          for (let node of element.childNodes) {
+              if (node.nodeType === 3) { // Text node
+                  let text = node.nodeValue;
+                  if (value === 'no') {
+                      text = text.replace(/ʒ̆/g, 'tz').replace(/ʒ/g, 'ts');
+                  } else if (value === 'yes') {
+                      text = text.replace(/tz/g, 'ʒ̆').replace(/ts/g, 'ʒ');
+                  }
+                  node.nodeValue = text;
+              }
+              if (node.nodeType === 1) { // Element node
+                  replaceTextInElement(node);
+              }
+          }
+      }
 
-    // Get all the content where ʒ and ʒ̆ appear
-    var content = document.body.innerHTML;
+      // Get all form groups and question containers
+      var textElements = document.querySelectorAll('.form-group, .question-container, label, p');
+      
+      // Replace text in each element
+      textElements.forEach(function(element) {
+          replaceTextInElement(element);
+      });
+  });
 
-    if (value === 'no') {
-      // Replace ʒ with ts and ʒ̆ with tz
-      content = content.replace(/ʒ̆/g, 'tz'); // replace all instances of ʒ̆
-      content = content.replace(/ʒ/g, 'ts');  // replace all instances of ʒ
-    } else if (value === 'yes') {
-      // Restore original text by reversing the replacement if necessary
-      content = content.replace(/tz/g, 'ʒ̆'); // revert tz to ʒ̆
-      content = content.replace(/ts/g, 'ʒ');  // revert ts to ʒ
-    }
-    // Update the page content
-    document.body.innerHTML = content;
-    });
-    
-    // Update the page content
-    document.body.innerHTML = content;
+
     var totalScore = 0; // Initialize totalScore
 
     // Show the first section on page load
