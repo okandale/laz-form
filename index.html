@@ -611,42 +611,48 @@
   
   <script>
 
-    document.getElementById('letterKnowledge').addEventListener('change', function() {
-        var value = this.value;
-        
-        // Function to replace text in an element without affecting its children
-        function replaceTextInElement(element) {
-            // Skip replacement if this is the question label
-            if (element.getAttribute('for') === 'letterKnowledge') {
-                return;
-            }
-            
-            for (let node of element.childNodes) {
-                if (node.nodeType === 3) { // Text node
-                    let text = node.nodeValue;
-                    if (value === 'no') {
-                        text = text.replace(/ʒ̆/g, 'tz').replace(/ʒ/g, 'ts');
-                    } else if (value === 'yes') {
-                        text = text.replace(/tz/g, 'ʒ̆').replace(/ts/g, 'ʒ');
-                    }
-                    node.nodeValue = text;
-                }
-                if (node.nodeType === 1) { // Element node
-                    replaceTextInElement(node);
-                }
-            }
-        }
+      document.getElementById('letterKnowledge').addEventListener('change', function() {
+          var value = this.value;
+          
+          // Get the sections that contain the questions
+          var sections = [document.getElementById('section2'), document.getElementById('section3')];
+          
+          sections.forEach(function(section) {
+              if (section) {
+                  replaceTextInElement(section);
+              }
+          });
 
-        // Get all form groups and question containers except the letter knowledge question
-        var textElements = document.querySelectorAll('.form-group:not(:has(#letterKnowledge)), .question-container, label:not([for="letterKnowledge"]), p:not(:has(label[for="letterKnowledge"]))');
-        
-        // Replace text in each element
-        textElements.forEach(function(element) {
-            replaceTextInElement(element);
-        });
-    });
+          function replaceTextInElement(element) {
+              // Skip script and style elements
+              if (element.tagName && (element.tagName.toLowerCase() === 'script' || element.tagName.toLowerCase() === 'style')) {
+                  return;
+              }
 
+              // Skip elements with event listeners
+              if (element.id === 'nextButton' || element.id === 'submitButton') {
+                  return;
+              }
 
+              // If this is a text node, replace the text
+              if (element.nodeType === Node.TEXT_NODE) {
+                  let text = element.nodeValue;
+                  if (value === 'no') {
+                      text = text.replace(/ʒ̆/g, 'tz').replace(/ʒ/g, 'ts');
+                  } else if (value === 'yes') {
+                      text = text.replace(/tz/g, 'ʒ̆').replace(/ts/g, 'ʒ');
+                  }
+                  element.nodeValue = text;
+              }
+
+              // Process child nodes
+              var child = element.firstChild;
+              while (child) {
+                  replaceTextInElement(child);
+                  child = child.nextSibling;
+              }
+          }
+      });
     var totalScore = 0; // Initialize totalScore
 
     // Show the first section on page load
