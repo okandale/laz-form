@@ -738,9 +738,7 @@
     }
 
     function hideLoading() {
-      setTimeout(function() {
-        document.getElementById('loadingOverlay').style.display = 'none';
-      }, 1000); // 1 second delay for testing
+      document.getElementById('loadingOverlay').style.display = 'none';
     }
 
     function submitForm() {
@@ -788,7 +786,6 @@
       
       // Submit the form directly if Section 3 is not required
       finalizeSubmission(formData);
-      hideLoading();
     }
 
     function finalizeSubmission(formData) {
@@ -823,7 +820,6 @@
         p.style.display = 'none';
       });
 
-      hideLoading();
 
       // Hide the footer
       var footer = document.querySelector('footer');
@@ -840,12 +836,14 @@
             // Cleanup
             delete window[callbackName];
             document.body.removeChild(script);
+
+            // Now hide the loading overlay
+            hideLoading();
         };
 
         var queryString = `callback=${callbackName}&data=${encodeURIComponent(JSON.stringify(formData))}`;
         script.src = `https://script.google.com/macros/s/AKfycbwruVYtGUYbOJMPn0Z_EVt1yMRMjieahmryhqB1sX37CD0DBDGbYg00nrhURfQr_MP_/exec?${queryString}`;
         document.body.appendChild(script);
-        hideLoading();
     }
     function calculateSection2Score() {
       var score = 0;
