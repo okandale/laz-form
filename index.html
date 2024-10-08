@@ -369,7 +369,7 @@
         <p>Bu soru setinde sorular ağız farklılıkları gözetilerek hazırlanmıştır.</p>
         <p>These questions have been prepared with consideration for dialectal differences.</p>
         
-        <div class="form-group">
+        <div id="letterKnowledgeQuestion" class="form-group">
           <label for="letterKnowledge" class="required">Do you know the letters ʒ/ʒ̆?</label>
           <select id="letterKnowledge" class="form-control" required>
             <option value="">Select</option>
@@ -630,7 +630,12 @@
               }
 
               // Skip elements with event listeners
-              if (element.id === 'nextButton' || element.id === 'submitButton') {
+              if (element.id === 'nextButton' || element.id === 'submitButton' || element.id === 'letterKnowledgeQuestion') {
+                  return;
+              }
+
+              // Skip the label for 'letterKnowledge'
+              if (element.getAttribute && element.getAttribute('for') === 'letterKnowledge') {
                   return;
               }
 
@@ -653,6 +658,7 @@
               }
           }
       });
+
     var totalScore = 0; // Initialize totalScore
 
     // Show the first section on page load
