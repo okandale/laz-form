@@ -823,15 +823,10 @@
         var script = document.createElement('script');
         var callbackName = 'callback' + Date.now();  // Generate a unique callback name
       // Hide all <p> elements under the <h2>
-        // Find the submission message div
-        var submissionDiv = document.getElementById('submissionMessage');
-        // Keep only the h2 and hide all other elements inside it
-        var elements = submissionDiv.children;
-        for (var i = 0; i < elements.length; i++) {
-            if (elements[i].tagName !== 'H2') {
-                elements[i].style.display = 'none';
-            }
-        }
+        var paragraphs = document.querySelectorAll('h2 ~ p');
+      paragraphs.forEach(function(p) {
+          p.style.display = 'none';
+      });
 
 
       // Hide the footer
